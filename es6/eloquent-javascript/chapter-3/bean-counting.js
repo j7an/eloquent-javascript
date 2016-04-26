@@ -15,19 +15,19 @@ takes a second argument that indicates the character that is to be counted
 use of this new function.
 */
 
-function countBs(string) {
+function countBs(stringBs) {
     function countChar(string, char) {
-        var numB = 0;
-        
-        for (var i = 0; i < string.length; i++) {
-            if (string.charAt(i) == char) {
+        let numB = 0;
+
+        for (let i = 0; i < string.length; i++) {
+            if (string.charAt(i) === char) {
                 numB++;
             }
         }
         return numB;
     }
 
-    return countChar(string, 'B');
+    return countChar(stringBs, 'B');
 }
 
 console.log(countBs('How many Bs are in this sentence? BBBB'));
