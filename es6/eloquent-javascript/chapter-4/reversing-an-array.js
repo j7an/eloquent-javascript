@@ -21,4 +21,18 @@ function reverseArray(array) {
     return revArray;
 }
 
+function reverseArrayInPlace(array) {
+    const length = array.length;
+
+    for (let i = length - 1; i >= 0; i--) {
+        array.push(array[i]);
+    }
+    for (let x = 0; x < length; x++) {
+        array.shift();
+    }
+    return array;
+}
+
 console.log(reverseArray(['Banana', 'Grape', 'Orange']));
+
+console.log(reverseArrayInPlace(['Banana', 'Grape', 'Orange']));
