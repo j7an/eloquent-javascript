@@ -13,12 +13,12 @@ If you haven’t already, also write a recursive version of nth.
 function arrayToList(array) {
     let index = array.length - 1;
     let node = null;
-    
+
     while (index >= 0) {
         node = prepend(array[index], node);
         index--;
     }
-    
+
     return node;
 }
 
@@ -40,7 +40,6 @@ function prepend(element, list) {
 }
 
 function nth(list, element) {
-
     if (!list) {
         return undefined;
     } else if (element === 0) {
@@ -51,5 +50,5 @@ function nth(list, element) {
 }
 
 console.log(arrayToList([1, 2, 3]));
-console.log(listToArray(arrayToList([1,2,3,4])));
+console.log(listToArray(arrayToList([1, 2, 3, 4])));
 console.log(nth(arrayToList([1, 2, 3]), 2));
