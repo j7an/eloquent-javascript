@@ -26,4 +26,8 @@ function isEven(num) {
     } else return isEven(num - 2);
 }
 
+console.log(isEven(50));
+console.log(isEven(75));
+console.log(isEven(-1));
+console.log(isEven(-50));
 console.log(isEven(-75));
