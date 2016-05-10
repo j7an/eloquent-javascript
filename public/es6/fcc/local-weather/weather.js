@@ -15,7 +15,7 @@ var weatherCondition = {"coord": {"lon":-115.24,"lat":36.03},
     "name":"Enterprise",
     "cod":200};
 
-var ipLocation = {"as":"AS22773 Cox Communications Inc.","city":"Las Vegas","country":"United States","countryCode":"US","isp":"Cox Communications","lat":36.0625,"lon":-115.3192,"org":"Cox Communications","query":"68.96.103.175","region":"NV","regionName":"Nevada","status":"success","timezone":"America/Los_Angeles","zip":"89148"};
+var ipLocation = {"as":"AS22773 Cox Communications Inc.","city":"Las Vegas","country":"United States","countryCode":"US","isp":"Cox Communications","lat":32.0625,"lon":-114.3192,"org":"Cox Communications","query":"68.96.103.175","region":"NV","regionName":"Nevada","status":"success","timezone":"America/Los_Angeles","zip":"89148"};
 
 var weatherId //= weatherCondition.weather[0].id;
 var weatherDescription //= weatherCondition.weather[0].description;
@@ -65,12 +65,15 @@ function ipFindMe() {
     
     myXMLHttpRequest.onreadystatechange = function() {
         if (myXMLHttpRequest.readyState === 4 && myXMLHttpRequest.status === 200) {
-            var ipLocation = JSON.parse(myXMLHttpRequest.responseText);
+            ipLocation = JSON.parse(myXMLHttpRequest.responseText);
             //var myIpJSON = JSON.stringify(myIpObject);
+            latitude = ipLocation.lat;
+            longitude = ipLocation.lon;
             
             console.log(ipLocation);
             //console.log(myIpJSON);
-            //output.innerHTML = myIpJSON;
+            
+            output.innerHTML = '<p>Latitude is ' + latitude + '° <br> Longitude is ' + longitude + '° </p>';
         }
     }
     
@@ -83,6 +86,7 @@ function getWeather(latitude, longitude) {
     var appid = '6284267c31e047d6c3e598d2db2566dd';
     var myXMLHttpRequest = new XMLHttpRequest();
     var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + latitude + '&lon=' + longitude + '&appid=' + appid; //'&units=imperial' + 
+    var output = document.getElementById("weather");
     
     myXMLHttpRequest.onreadystatechange = function() {
         if (myXMLHttpRequest.readyState === 4 && myXMLHttpRequest.status === 200) {
@@ -97,6 +101,10 @@ function getWeather(latitude, longitude) {
             weatherId = weatherCondition.weather[0].id;
             weatherDescription = weatherCondition.weather[0].description;
             weatherIcon = weatherCondition.weather[0].icon;
+            tempKelvin = weatherCondition.main.temp;
+            tempCelsius = tempKelvin - 273.15;
+            tempFahrenheit = (tempKelvin - 273.15) * 9/5 + 32;
+            output.innerHTML = '<p>Kelvin is ' + tempKelvin + '°<br>Celsius is ' + tempCelsius + '°<br>Fahrenheit is ' + tempFahrenheit + '°</p>';
             console.log(weatherId, weatherDescription, weatherIcon);
         }
     }
