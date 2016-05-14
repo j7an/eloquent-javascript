@@ -1,5 +1,4 @@
 {
-    /*"extends": "defaults/configurations/airbnb/es6",*/
     "extends": "airbnb",
     "rules": {
         "indent": [

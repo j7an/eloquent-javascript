@@ -7,7 +7,7 @@ gulp.task('default', function() {
   gulp.src(["es6/**/*.js", "public/es6/**/*.js"])
     .pipe(eslint())
     .pipe(eslint.format())
-    .pipe(eslint.failAfterError());
+    //.pipe(eslint.failAfterError());
   // Node source
   gulp.src("es6/**/*.js")
     .pipe(babel())
