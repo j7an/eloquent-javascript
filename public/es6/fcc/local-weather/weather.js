@@ -25,6 +25,7 @@ var weatherLocation
 var tempKelvin
 var tempCelsius
 var tempFahrenheit
+var outputTemp = document.getElementsByClassName("temp");
 
 // function geoFindMe() {
 //     var output = document.getElementById("location");
@@ -94,7 +95,7 @@ function getWeather(latitude, longitude) {
     var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + latitude + '&lon=' + longitude + '&appid=' + appid; //'&units=imperial' + 
     //var output = document.getElementById("weather");
     var outputCondition = document.getElementsByClassName("condition");
-    var outputTemp = document.getElementsByClassName("temp");
+    //var outputTemp = document.getElementsByClassName("temp");
     var weatherId;
     
     myXMLHttpRequest.onreadystatechange = function() {
@@ -127,6 +128,17 @@ function getWeather(latitude, longitude) {
     
     //return myObject;
     //http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=b1b15e88fa797225412429c1c50c122a
+}
+
+var showFahrenheit = false;
+
+function toggleTemp() {
+    showFahrenheit = !showFahrenheit;
+    if (showFahrenheit) {
+        outputTemp[0].innerHTML = tempFahrenheit;
+    } else {
+        outputTemp[0].innerHTML = tempCelsius;
+    }
 }
 
 // function getWeather() {
