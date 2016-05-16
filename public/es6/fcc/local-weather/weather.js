@@ -1,5 +1,6 @@
 $(document).ready(function() {
     console.log('ready!');
+    ipFindMe();
 });
 
 //var x = document.getElementById("weather");
@@ -17,49 +18,51 @@ var weatherCondition = {"coord": {"lon":-115.24,"lat":36.03},
 
 var ipLocation = {"as":"AS22773 Cox Communications Inc.","city":"Las Vegas","country":"United States","countryCode":"US","isp":"Cox Communications","lat":32.0625,"lon":-114.3192,"org":"Cox Communications","query":"68.96.103.175","region":"NV","regionName":"Nevada","status":"success","timezone":"America/Los_Angeles","zip":"89148"};
 
-var weatherId //= weatherCondition.weather[0].id;
+var weatherClass
 var weatherDescription //= weatherCondition.weather[0].description;
-var weatherIcon //= weatherCondition.weather[0].icon;
+//var weatherIcon //= weatherCondition.weather[0].icon;
+var weatherLocation
 var tempKelvin
 var tempCelsius
 var tempFahrenheit
 
-function geoFindMe() {
-    var output = document.getElementById("location");
+// function geoFindMe() {
+//     var output = document.getElementById("location");
     
-    if (!navigator.geolocation) {
-        output.innerHTML = "<p>Geolocation is not supported by your browser.</p>"
-        return;
-    }
+//     if (!navigator.geolocation) {
+//         output.innerHTML = "<p>Geolocation is not supported by your browser.</p>"
+//         return;
+//     }
     
-    function success(position) {
-        var latitude = position.coords.latitude;
-        var longitude = position.coords.longitude;
+//     function success(position) {
+//         var latitude = position.coords.latitude;
+//         var longitude = position.coords.longitude;
         
-        output.innerHTML = '<p>Latitude is ' + latitude + '° <br> Longitude is ' + longitude + '° </p>';
+//         output.innerHTML = '<p>Latitude is ' + latitude + '° <br> Longitude is ' + longitude + '° </p>';
         
-        var img = new Image();
-        img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
+//         var img = new Image();
+//         img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
         
-        output.appendChild(img);
+//         output.appendChild(img);
         
-        console.log(getWeather(latitude, longitude));
-    }
+//         console.log(getWeather(latitude, longitude));
+//     }
     
-    function error() {
-        output.innerHTML = "Unable to retrieve your location";
-    }
+//     function error() {
+//         output.innerHTML = "Unable to retrieve your location";
+//     }
     
-    output.innerHTML = "<p>Locating...</p>";
+//     output.innerHTML = "<p>Locating...</p>";
     
-    navigator.geolocation.getCurrentPosition(success, error);
+//     navigator.geolocation.getCurrentPosition(success, error);
     
-}
+// }
 
 function ipFindMe() {
     var latitude = ipLocation.lat;
     var longitude = ipLocation.lon;
-    var output = document.getElementById("location");
+    //var output = document.getElementById("location");
+    var outputLocation = document.getElementsByClassName("location");
     var myXMLHttpRequest = new XMLHttpRequest();
     var url = 'http://ip-api.com/json'
     
@@ -69,43 +72,53 @@ function ipFindMe() {
             //var myIpJSON = JSON.stringify(myIpObject);
             latitude = ipLocation.lat;
             longitude = ipLocation.lon;
+            weatherLocation = ipLocation.city + ", " + ipLocation.region;
             
-            console.log(ipLocation);
+            //console.log(ipLocation);
             //console.log(myIpJSON);
             
-            output.innerHTML = '<p>Latitude is ' + latitude + '° <br> Longitude is ' + longitude + '° </p>';
+            //output.innerHTML = '<p>Latitude is ' + latitude + '° <br> Longitude is ' + longitude + '° </p>';
+            outputLocation[0].innerHTML = weatherLocation;
         }
     }
     
     myXMLHttpRequest.open("GET", url, true);
     myXMLHttpRequest.send();
-    console.log(getWeather(latitude, longitude));
+    //console.log(getWeather(latitude, longitude));
+    getWeather(latitude, longitude);
 }
 
 function getWeather(latitude, longitude) {
     var appid = '6284267c31e047d6c3e598d2db2566dd';
     var myXMLHttpRequest = new XMLHttpRequest();
     var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + latitude + '&lon=' + longitude + '&appid=' + appid; //'&units=imperial' + 
-    var output = document.getElementById("weather");
+    //var output = document.getElementById("weather");
+    var outputCondition = document.getElementsByClassName("condition");
+    var outputTemp = document.getElementsByClassName("temp");
+    var weatherId;
     
     myXMLHttpRequest.onreadystatechange = function() {
         if (myXMLHttpRequest.readyState === 4 && myXMLHttpRequest.status === 200) {
             var myObject = JSON.parse(myXMLHttpRequest.responseText);
             var myJSON = JSON.stringify(myObject);
-            console.log(myObject);
-            console.log(myJSON);
+            //console.log(myObject);
+            //console.log(myJSON);
             
             weatherCondition = JSON.parse(myXMLHttpRequest.responseText);
-            console.log(weatherCondition);
+            //console.log(weatherCondition);
             
             weatherId = weatherCondition.weather[0].id;
+            weatherClass = "wi wi-owm-" + weatherId;
             weatherDescription = weatherCondition.weather[0].description;
-            weatherIcon = weatherCondition.weather[0].icon;
+            //weatherIcon = weatherCondition.weather[0].icon;
             tempKelvin = weatherCondition.main.temp;
-            tempCelsius = tempKelvin - 273.15;
-            tempFahrenheit = (tempKelvin - 273.15) * 9/5 + 32;
-            output.innerHTML = '<p>Kelvin is ' + tempKelvin + '°<br>Celsius is ' + tempCelsius + '°<br>Fahrenheit is ' + tempFahrenheit + '°</p>';
-            console.log(weatherId, weatherDescription, weatherIcon);
+            tempCelsius = Math.round(tempKelvin - 273.15) + " °C";
+            tempFahrenheit = Math.round((tempKelvin - 273.15) * 9/5 + 32) + " °F";
+            //output.innerHTML = '<p>Kelvin is ' + tempKelvin + '°<br>Celsius is ' + tempCelsius + '°<br>Fahrenheit is ' + tempFahrenheit + '°</p>';
+            $("i").removeClass().addClass(weatherClass);
+            outputCondition[0].innerHTML = weatherDescription;
+            outputTemp[0].innerHTML = tempCelsius;// + "°";
+            console.log(weatherId, weatherDescription, weatherClass);
         }
     }
     
