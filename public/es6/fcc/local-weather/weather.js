@@ -5,27 +5,36 @@ $(document).ready(function() {
 });
 
 //var x = document.getElementById("weather");
-var weatherCondition = {"coord": {"lon":-115.24,"lat":36.03},
-    "weather":[{"id":802,"main":"Clouds","description":"scattered clouds","icon":"03d"}],
-    "base":"cmc stations",
-    "main":{"temp":52.22,"pressure":914.23,"humidity":78,"temp_min":52.22,"temp_max":52.22,"sea_level":1024.69,"grnd_level":914.23},
-    "wind":{"speed":3.4,"deg":309.006},
-    "clouds":{"all":32},
-    "dt":1462720231,
-    "sys":{"message":0.0045,"country":"US","sunrise":1462711203,"sunset":1462761313},
-    "id":5503766,
-    "name":"Enterprise",
-    "cod":200};
+var weatherCondition = {};
+    // {"coord": {"lon":-115.24,"lat":36.03},
+    // "weather":[{"id":802,"main":"Clouds","description":"scattered clouds","icon":"03d"}],
+    // "base":"cmc stations",
+    // "main":{"temp":52.22,"pressure":914.23,"humidity":78,"temp_min":52.22,"temp_max":52.22,"sea_level":1024.69,"grnd_level":914.23},
+    // "wind":{"speed":3.4,"deg":309.006},
+    // "clouds":{"all":32},
+    // "dt":1462720231,
+    // "sys":{"message":0.0045,"country":"US","sunrise":1462711203,"sunset":1462761313},
+    // "id":5503766,
+    // "name":"Enterprise",
+    // "cod":200};
 
-var ipLocation;// = {"as":"AS22773 Cox Communications Inc.","city":"Las Vegas","country":"United States","countryCode":"US","isp":"Cox Communications","lat":32.0625,"lon":-114.3192,"org":"Cox Communications","query":"68.96.103.175","region":"NV","regionName":"Nevada","status":"success","timezone":"America/Los_Angeles","zip":"89148"};
+var ipLocation = {};
+    // {"as":"AS22773 Cox Communications Inc.","city":"Las Vegas",
+    // "country":"United States","countryCode":"US","isp":"Cox Communications",
+    // "lat":32.0625,"lon":-114.3192,"org":"Cox Communications",
+    // "query":"68.96.103.175","region":"NV","regionName":"Nevada",
+    // "status":"success","timezone":"America/Los_Angeles","zip":"89148"};
 
-var weatherClass
-var weatherDescription //= weatherCondition.weather[0].description;
+// var weatherClass
+//var weatherDescription //= weatherCondition.weather[0].description;
 //var weatherIcon //= weatherCondition.weather[0].icon;
-var weatherLocation
-var tempKelvin
-var tempCelsius
-var tempFahrenheit
+var weatherLocation;
+var tempKelvin;
+var tempCelsius;
+var tempFahrenheit;
+var sunrise;
+var sunset;
+var currentTime = new Date();
 var outputLocation = document.getElementsByClassName("location");
 var outputTemp = document.getElementsByClassName("temp");
 
@@ -106,7 +115,7 @@ function getWeather(latitude, longitude) {
     //var output = document.getElementById("weather");
     var outputCondition = document.getElementsByClassName("condition");
     //var outputTemp = document.getElementsByClassName("temp");
-    var weatherId;
+    //var weatherId;
     
     myXMLHttpRequest.onreadystatechange = function() {
         if (myXMLHttpRequest.readyState === 4 && myXMLHttpRequest.status === 200) {
@@ -116,20 +125,24 @@ function getWeather(latitude, longitude) {
             //console.log(myJSON);
             
             weatherCondition = JSON.parse(myXMLHttpRequest.responseText);
-            console.log(weatherCondition);
+            // console.log(weatherCondition);
             
-            weatherId = weatherCondition.weather[0].id;
-            weatherClass = "wi wi-owm-" + weatherId;
-            weatherDescription = weatherCondition.weather[0].description;
+            // weatherId = weatherCondition.weather[0].id;
+            // weatherClass = "wi wi-owm-" + weatherId;
+            //weatherDescription = weatherCondition.weather[0].description;
             //weatherIcon = weatherCondition.weather[0].icon;
             tempKelvin = weatherCondition.main.temp;
             tempCelsius = Math.round(tempKelvin - 273.15) + " °C";
             tempFahrenheit = Math.round((tempKelvin - 273.15) * 9/5 + 32) + " °F";
+            // sunrise = new Date(weatherCondition.sys.sunrise * 1000);
+            // sunset = new Date(weatherCondition.sys.sunset * 1000);
             //output.innerHTML = '<p>Kelvin is ' + tempKelvin + '°<br>Celsius is ' + tempCelsius + '°<br>Fahrenheit is ' + tempFahrenheit + '°</p>';
-            $("i").removeClass().addClass(weatherClass);
-            outputCondition[0].innerHTML = "<p>" + weatherDescription + "</p>";
+            // $("i").removeClass().addClass("wi wi-owm-" + weatherCondition.weather[0].id);
+            weatherIcon();
+            outputCondition[0].innerHTML = "<p>" + weatherCondition.weather[0].description + "</p>";
             outputTemp[0].innerHTML = "<p>" + tempCelsius + "</p>";
             //console.log(weatherId, weatherDescription, weatherClass);
+            // console.log(sunrise, sunset, currentTime);
         }
     }
     
@@ -149,6 +162,20 @@ function toggleTemp() {
     } else {
         outputTemp[0].innerHTML = "<p>" + tempCelsius + "</p>";
     }
+}
+
+function weatherIcon() {
+    sunrise = new Date(weatherCondition.sys.sunrise * 1000);
+    sunset = new Date(weatherCondition.sys.sunset * 1000);
+    // $("i").removeClass().addClass("wi wi-owm-" + weatherCondition.weather[0].id);
+    // $("i").removeClass().addClass("wi wi-owm-night-" + weatherCondition.weather[0].id);
+    if (currentTime >= sunrise && currentTime <= sunset) {
+        $("i").removeClass().addClass("wi wi-owm-day-" + weatherCondition.weather[0].id);
+    } else {
+        $("i").removeClass().addClass("wi wi-owm-night-" + weatherCondition.weather[0].id);
+    }
+    // console.log(sunrise.getHours(), sunset.getHours(), currentTime.getHours());
+    console.log(sunrise, sunset, currentTime)
 }
 
 // function getWeather() {
