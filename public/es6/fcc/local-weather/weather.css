@@ -1,0 +1,16 @@
+.weather {
+    bottom: 0;
+    height: 300px;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    text-align: center;
+    font-size: 25px;
+}
+
+.weather-icon {
+    font-size: 70px;
+}
