@@ -33,13 +33,14 @@ function getWeather(latitude, longitude) {
     myXMLHttpRequest.onreadystatechange = function () {
         if (myXMLHttpRequest.readyState === 4 && myXMLHttpRequest.status === 200) {
             weatherCondition = JSON.parse(myXMLHttpRequest.responseText);
-
+            console.log(JSON.stringify(weatherCondition));
             tempKelvin = weatherCondition.main.temp;
             tempCelsius = `${Math.round(tempKelvin - 273.15)} °C`;
             tempFahrenheit = `${Math.round((tempKelvin - 273.15) * 9 / 5 + 32)} °F`;
 
             weatherIcon();
 
+            outputLocation[0].innerHTML = `${weatherCondition.name}, ${weatherCondition.sys.country}`;
             outputCondition[0].innerHTML = `<p>${weatherCondition.weather[0].description}</p>`;
             outputTemp[0].innerHTML = `<p>${tempCelsius}</p>`;
         }
@@ -57,7 +58,7 @@ function ipFindMe() {
         if (myXMLHttpRequest.readyState === 4 && myXMLHttpRequest.status === 200) {
             ipLocation = JSON.parse(myXMLHttpRequest.responseText);
 
-            outputLocation[0].innerHTML = `${ipLocation.city}, ${ipLocation.region}`;
+            //outputLocation[0].innerHTML = `${ipLocation.city}, ${ipLocation.region}`;
 
             getWeather(ipLocation.lat, ipLocation.lon);
         }
