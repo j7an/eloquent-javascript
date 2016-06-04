@@ -33,7 +33,7 @@ function getWeather(latitude, longitude) {
     myXMLHttpRequest.onreadystatechange = function () {
         if (myXMLHttpRequest.readyState === 4 && myXMLHttpRequest.status === 200) {
             weatherCondition = JSON.parse(myXMLHttpRequest.responseText);
-            console.log(JSON.stringify(weatherCondition));
+
             tempKelvin = weatherCondition.main.temp;
             tempCelsius = `${Math.round(tempKelvin - 273.15)} °C`;
             tempFahrenheit = `${Math.round((tempKelvin - 273.15) * 9 / 5 + 32)} °F`;
