@@ -14,3 +14,7 @@
 .weather-icon {
     font-size: 70px;
 }
+
+.btn {
+    box-shadow: 5px 5px 5px grey;
+}
