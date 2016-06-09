@@ -1,0 +1,74 @@
+body, html{
+    height: 100%;
+}
+
+.centered{
+    display: flex;
+    justify-content: center;
+    /*justify-content: flex-start;*/
+    align-items: center;
+    flex-flow: column nowrap;
+
+    height: 100%;
+}
+
+.child {
+    margin: 1em;
+}
+
+.results {
+    margin: 2em;
+    width: 700px;
+}
+
+input[type=search] {
+    background: #ededed;
+    border: solid 2px #ccc;
+    padding: 9px 10px 9px 12px;
+    width: 140px;
+    font-family: FontAwesome;
+    
+    border-radius: 10em;
+    
+    transition: all .5s;
+}
+
+input[type=search]:focus {
+    width: 200px;
+    background-color: #fff;
+    border-color: #6dcff6;
+
+    box-shadow: 0 0 5px rgba(109,207,246,.5);
+}
+
+::-webkit-input-placeholder {
+ text-align: center;
+}
+
+:-moz-placeholder { /* older Firefox*/
+ text-align: center;
+}
+
+::-moz-placeholder { /* Firefox 19+ */ 
+ text-align: center;
+} 
+
+:-ms-input-placeholder { 
+ text-align: center;
+}
+
+input:focus::-webkit-input-placeholder {
+    color:transparent;
+}
+
+input:focus:-moz-placeholder {
+    color:transparent;
+} /* FF 4-18 */
+
+input:focus::-moz-placeholder {
+    color:transparent;
+} /* FF 19+ */
+
+input:focus:-ms-input-placeholder {
+    color:transparent;
+} /* IE 10+ */
