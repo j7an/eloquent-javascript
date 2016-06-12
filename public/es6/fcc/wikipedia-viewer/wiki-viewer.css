@@ -1,11 +1,11 @@
-body, html{
+body,
+html {
     height: 100%;
 }
 
-.centered{
+.centered {
     display: flex;
     justify-content: center;
-    /*justify-content: flex-start;*/
     align-items: center;
     flex-flow: column nowrap;
 
@@ -27,10 +27,10 @@ input[type=search] {
     padding: 9px 10px 9px 12px;
     width: 140px;
     font-family: FontAwesome;
-    
+
     border-radius: 10em;
-    
-    transition: all .5s;
+
+    transition: all 0.5s;
 }
 
 input[type=search]:focus {
@@ -38,37 +38,37 @@ input[type=search]:focus {
     background-color: #fff;
     border-color: #6dcff6;
 
-    box-shadow: 0 0 5px rgba(109,207,246,.5);
+    box-shadow: 0 0 5px rgba(109, 207, 246, 0.5);
 }
 
 ::-webkit-input-placeholder {
- text-align: center;
+    text-align: center;
 }
 
-:-moz-placeholder { /* older Firefox*/
- text-align: center;
+:-moz-placeholder { /* older Firefox */
+    text-align: center;
 }
 
-::-moz-placeholder { /* Firefox 19+ */ 
- text-align: center;
-} 
+::-moz-placeholder { /* Firefox 19+ */
+    text-align: center;
+}
 
-:-ms-input-placeholder { 
- text-align: center;
+:-ms-input-placeholder {
+    text-align: center;
 }
 
 input:focus::-webkit-input-placeholder {
-    color:transparent;
+    color: transparent;
 }
 
 input:focus:-moz-placeholder {
-    color:transparent;
+    color: transparent;
 } /* FF 4-18 */
 
 input:focus::-moz-placeholder {
-    color:transparent;
+    color: transparent;
 } /* FF 19+ */
 
 input:focus:-ms-input-placeholder {
-    color:transparent;
+    color: transparent;
 } /* IE 10+ */
